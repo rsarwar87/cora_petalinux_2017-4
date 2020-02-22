@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#docker build -t petalinux-ubuntu16-04 .
+
+export IMAGENAME=petalnx-ubuntu16
+export IUID=$UID
+export IGID=`id -g $USER`
+export whoami=$USER
+export LDIR="$PWD" 
+export VERSION=2017.4
+export ARCH=arm
+

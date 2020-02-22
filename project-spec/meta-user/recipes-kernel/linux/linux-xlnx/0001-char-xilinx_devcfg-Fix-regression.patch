@@ -1,0 +1,43 @@
+From 3b7361e98848708b55fc047ae887cc52aa5c9aa5 Mon Sep 17 00:00:00 2001
+From: Michael Hennerich <michael.hennerich@analog.com>
+Date: Fri, 27 Oct 2017 11:38:04 +0200
+Subject: [LINUX PATCH] char: xilinx_devcfg: Fix regression
+
+Fixed regression introduced by remove volatile in
+'a920e66a043 ("char: xilinx_devcfg: Fix warnings in the driver")'
+
+removed volatile around dma_done and error_status without further actions.
+This fix prevents these variables from being optimized away without being
+read.
+
+Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
+Signed-off-by: Michal Simek <michal.simek@xilinx.com>
+---
+ drivers/char/xilinx_devcfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/char/xilinx_devcfg.c b/drivers/char/xilinx_devcfg.c
+index 81ee11fe7298..81cf118d387b 100644
+--- a/drivers/char/xilinx_devcfg.c
++++ b/drivers/char/xilinx_devcfg.c
+@@ -349,14 +349,14 @@ xdevcfg_write(struct file *file, const char __user *buf, size_t count,
+ 
+ 	timeout = jiffies + msecs_to_jiffies(1000);
+ 
+-	while (!drvdata->dma_done) {
++	while (!READ_ONCE(drvdata->dma_done)) {
+ 		if (time_after(jiffies, timeout)) {
+ 			status = -ETIMEDOUT;
+ 			goto error;
+ 		}
+ 	}
+ 
+-	if (drvdata->error_status)
++	if (READ_ONCE(drvdata->error_status))
+ 		status = drvdata->error_status;
+ 
+ 	/* Disable the DMA and error interrupts */
+-- 
+2.11.0
+
+

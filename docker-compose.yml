@@ -1,0 +1,16 @@
+version: '3'
+services:
+  plnx:
+    image: "${IMAGENAME}"
+    environment:
+        - USER_ID=${IUID}
+        - USER_NAME=${whoami}
+        - GROUP_ID=${IGID}
+        - pVERSION=${VERSION}
+        - ARCH=${ARCH}
+        - LANG=en_US.UTF-8
+    volumes: 
+        - /opt/Xilinx:/opt/Xilinx
+        - /home/${whoami}/workspace:/home/${whoami}/workspace
+    working_dir:
+        ${LDIR}
