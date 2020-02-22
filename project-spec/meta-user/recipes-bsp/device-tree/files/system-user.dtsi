@@ -80,7 +80,7 @@
 	};
 };
 
-
+/*
 &pwm_rgb {
 	compatible = "generic-uio";	
 };
@@ -91,3 +91,4 @@
 &axi_gpio_shield {
 	compatible = "generic-uio";
 };
+*/
