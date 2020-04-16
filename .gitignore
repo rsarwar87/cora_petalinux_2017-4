@@ -1,3 +1,6 @@
 .Xil
 meta-plnx-generated
 build
+components
+root.*
+rootfs.*
