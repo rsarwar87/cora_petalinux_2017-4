@@ -15,6 +15,14 @@
 		drv-vbus;
 	};
 
+  aliases {
+    spi0 = &spi0;
+  }
+
+  memory {
+    device_type = "memory";
+    reg = <0x0 0x1D000000>;
+  }
 
   
 
@@ -42,4 +50,12 @@
 	u-boot,dm-pre-reloc;
 };
 
+&spi0 {
+			status = "okay";
+      spidev@0{
+        compatible = "spidev";
+        reg = <0>;
+        spi-max-frequency = <10000000>;
+      }
+};
 
