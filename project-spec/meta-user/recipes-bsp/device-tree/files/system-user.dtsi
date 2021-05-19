@@ -17,6 +17,7 @@
 
   aliases {
     spi0 = &spi0;
+    i2ic0 = &i2c0;
   };
 
   memory {
@@ -50,6 +51,9 @@
 	u-boot,dm-pre-reloc;
 };
 
+&i2c0 {
+			status = "okay";
+};
 &spi0 {
 			status = "okay";
       spidev@0{
